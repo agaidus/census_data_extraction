@@ -33,7 +33,7 @@ def num_points_in_gdf(geometry, values, points_per_value = None, seed = None):
     new_values = new_values[new_values>0]
     g = gpd.GeoDataFrame(data = {'vals':new_values}, geometry = geometry)
     
-    a = g.apply(lambda row: gen_random_points_poly(row['geometry'], row['vals'], seed),1)
+    a = g.apply(lambda row: tuple(gen_random_points_poly(row['geometry'], row['vals'], seed)),1)
     b = gpd.GeoSeries(a.apply(pd.Series).stack(), crs = geometry.crs)
     return b
 
